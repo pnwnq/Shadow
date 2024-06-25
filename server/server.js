@@ -1,17 +1,15 @@
+// server/server.js
 const express = require('express');
-const connectDB = require('./config/db');
-const cors = require('cors');
-
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-// Connect Database
-connectDB();
+// 中间件
+app.use(express.json());
 
-// Init Middleware
-app.use(express.json({ extended: false }));
-app.use(cors());
+// 路由
+app.use('/api/auth', require('./routes/auth')); // 确保路径正确
 
+// 基本路由
 app.get('/', (req, res) => res.send('API Running'));
 
-const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

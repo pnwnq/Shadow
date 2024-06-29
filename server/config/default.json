@@ -1,4 +1,6 @@
 {
-    "mongoURI": "mongodb://localhost:27017/shadow"
+    "mongoURI": "mongodb://localhost:27017/shadow",
+    "jwtSecret": "3c41b0e5c91eb9b1f7bcd6bbd56eac1f4edc1c5f68f76e42c4e7e3ad8b847cf1a6d9e163d62c7d739dd88b0c25f77e4f41a5a2b9b0d6bbf7e78e4a7b3e44bdfd"
+
   }
   

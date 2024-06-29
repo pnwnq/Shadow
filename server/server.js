@@ -24,8 +24,19 @@ app.use(express.json());
 
 // 路由
 app.use('/api/auth', require('./routes/auth')); // 确保这里正确引入了auth路由
+app.use('/api/items', require('./routes/item'));
+app.use('/api/roles', require('./routes/role'));
 
 // 基本路由
 app.get('/', (req, res) => res.send('API Running'));
+
+// 错误处理中间件
+app.use((err, req, res, next) => {
+  console.error(err); // 输出详细的错误信息到控制台
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).send({ msg: 'Invalid JSON', error: err.message });
+  }
+  next();
+});
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

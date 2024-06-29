@@ -5,6 +5,7 @@ import HomePage from './components/HomePage';
 import AboutPage from './components/AboutPage';
 import RegisterPage from './components/RegisterPage'; // 引入RegisterPage组件
 import LoginPage from './components/LoginPage'; // 引入LoginPage组件
+import ItemPage from './components/ItemPage'; // 引入ItemPage组件
 import Footer from './components/Footer';
 import Counter from './components/Counter';
 
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/register" element={<RegisterPage />} /> {/* 添加RegisterPage路由 */}
         <Route path="/login" element={<LoginPage />} /> {/* 添加LoginPage路由 */}
+        <Route path="/items" element={<ItemPage />} /> {/* 添加ItemPage路由 */}
       </Routes>
       <Counter />
       <Footer />

@@ -1,24 +1,22 @@
-// server/models/User.js
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
-  email: {
+  role: {
     type: String,
-    required: true,
+    default: 'user', // 默认角色为普通用户
+  },
+  qqId: {
+    type: String,
     unique: true,
   },
-  password: {
+  qqPassword: {
     type: String,
-    required: true,
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
+  // 其他字段根据需要添加
 });
 
-module.exports = mongoose.model('user', UserSchema);
+export default mongoose.model('User', UserSchema);

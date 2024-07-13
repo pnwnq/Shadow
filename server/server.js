@@ -1,6 +1,16 @@
-const express = require('express');
-const connectDB = require('./config/db');
-const cors = require('cors'); // 引入cors中间件
+import express from 'express';
+import connectDB from './config/db.js';
+import cors from 'cors';
+import session from 'express-session';
+import passport from './config/passport.js';
+import authRoutes from './routes/auth.js';
+import itemRoutes from './routes/item.js';
+import roleRoutes from './routes/role.js';
+import dotenv from 'dotenv';
+
+// 加载环境变量
+dotenv.config();
+
 const app = express();
 
 // 连接数据库
@@ -10,22 +20,30 @@ const PORT = process.env.PORT || 5000;
 
 // CORS配置
 const corsOptions = {
-  origin: 'http://localhost:3000', // 允许的前端URL
+  origin: '*', // 允许的前端URL
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // 允许的方法
   credentials: true, // 允许发送cookie
+  allowedHeaders: 'Content-Type,Authorization', // 允许的请求头
   optionsSuccessStatus: 204 // 一些旧的浏览器对204的处理
 };
 
 // 启用CORS
 app.use(cors(corsOptions));
 
-// 中间件
+// 使用 JSON 中间件
 app.use(express.json());
 
+// 使用 session 中间件
+app.use(session({ secret: 'your_secret', resave: false, saveUninitialized: true }));
+
+// 初始化 Passport 中间件
+app.use(passport.initialize());
+app.use(passport.session());
+
 // 路由
-app.use('/api/auth', require('./routes/auth')); // 确保这里正确引入了auth路由
-app.use('/api/items', require('./routes/item'));
-app.use('/api/roles', require('./routes/role'));
+app.use('/api/auth', authRoutes);
+app.use('/api/item', itemRoutes);
+app.use('/api/role', roleRoutes);
 
 // 基本路由
 app.get('/', (req, res) => res.send('API Running'));

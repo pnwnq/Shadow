@@ -1,11 +1,26 @@
-// server/routes/item.js
-const express = require('express');
+import express from 'express';
+import Item from '../models/Item.js';
+
 const router = express.Router();
-const authMiddleware = require('../middleware/authMiddleware');
-const Item = require('../models/Item');
+
+const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).send('Unauthorized');
+};
+
+const checkRoles = (roles) => {
+  return (req, res, next) => {
+    if (roles.includes(req.user.role)) {
+      return next();
+    }
+    res.status(403).send('Forbidden');
+  };
+};
 
 // 创建物品
-router.post('/', authMiddleware(['admin', 'manager']), async (req, res) => {
+router.post('/', isAuthenticated, checkRoles(['admin', 'manager']), async (req, res) => {
   const { name, description, category, quantity } = req.body;
   try {
     const newItem = new Item({
@@ -33,7 +48,7 @@ router.get('/', async (req, res) => {
 });
 
 // 更新物品
-router.put('/:id', authMiddleware(['admin', 'manager']), async (req, res) => {
+router.put('/:id', isAuthenticated, checkRoles(['admin', 'manager']), async (req, res) => {
   const { name, description, category, quantity } = req.body;
   try {
     let item = await Item.findById(req.params.id);
@@ -54,7 +69,7 @@ router.put('/:id', authMiddleware(['admin', 'manager']), async (req, res) => {
 });
 
 // 删除物品
-router.delete('/:id', authMiddleware(['admin', 'manager']), async (req, res) => {
+router.delete('/:id', isAuthenticated, checkRoles(['admin', 'manager']), async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
     if (!item) {
@@ -68,4 +83,4 @@ router.delete('/:id', authMiddleware(['admin', 'manager']), async (req, res) => 
   }
 });
 
-module.exports = router;
+export default router;

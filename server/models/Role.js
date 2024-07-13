@@ -1,14 +1,20 @@
-// server/models/Role.js
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const RoleSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
-  permissions: [{
-    type: String,
-  }],
+  permissions: {
+    type: [String],
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  }
 });
 
-module.exports = mongoose.model('role', RoleSchema);
+const Role = mongoose.model('Role', RoleSchema);
+
+export default Role;

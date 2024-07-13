@@ -1,111 +1,13 @@
-### 测试注册API
-POST http://localhost:5000/api/auth/register
-Content-Type: application/json
-
-{
-  "name": "Test User",
-  "email": "test@example.com",
-  "password": "password123"
-}
-
-### 测试登录API
+### 获取 Token
 POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
+  "email": "john@example.com",
   "password": "password123"
 }
 
-### 获取所有用户信息
-GET http://localhost:5000/api/auth/users
-x-auth-token: {{auth_token}}
-
-### 创建角色
-POST http://localhost:5000/api/roles
-Content-Type: application/json
-x-auth-token: {{auth_token}}
-
-{
-  "name": "manager",
-  "permissions": ["create_item", "update_item", "delete_item"]
-}
-
-### 获取所有角色
-GET http://localhost:5000/api/roles
-x-auth-token: {{auth_token}}
-
-### 创建物品
-POST http://localhost:5000/api/items
-Content-Type: application/json
-x-auth-token: {{auth_token}}
-
-{
-  "name": "Screwdriver",
-  "description": "A tool for driving screws",
-  "category": "Tool",
-  "quantity": 10
-}
-
-### 获取所有物品
-GET http://localhost:5000/api/items
-
-### 更新物品
-PUT http://localhost:5000/api/items/<Item_ID>
-Content-Type: application/json
-x-auth-token: {{auth_token}}
-
-{
-  "name": "Screwdriver",
-  "description": "A tool for driving screws",
-  "category": "Tool",
-  "quantity": 15
-}
-
-### 删除物品
-DELETE http://localhost:5000/api/items/<Item_ID>
-x-auth-token: {{auth_token}}
-
-### 注册管理员用户
-POST http://localhost:5000/api/auth/register
-Content-Type: application/json
-
-{
-  "name": "Admin User",
-  "email": "admin@example.com",
-  "password": "password123"
-}
-
-### 登录管理员用户
-POST http://localhost:5000/api/auth/login
-Content-Type: application/json
-
-{
-  "email": "admin@example.com",
-  "password": "password123"
-}
-
-### 获取JWT令牌
-@auth_token =
-POST http://localhost:5000/api/auth/login
-Content-Type: application/json
-
-{"email": "admin@example.com","password": "password123"}
-
-> {%
-  client.test("Request executed successfully", function() {
-    var jsonResponse = JSON.parse(response.body);
-    client.global.set("auth_token", jsonResponse.token);
-  });
-%}
-
-
-### 使用JWT令牌创建角色
-POST http://localhost:5000/api/roles
-Content-Type: application/json
-x-auth-token: {{auth_token}}
-
-{
-  "name": "manager",
-  "permissions": ["create_item", "update_item", "delete_item"]
+@{
+  const response = pm.response.json();
+  pm.environment.set("auth_token", response.token);
 }

@@ -9,21 +9,23 @@ import ItemPage from './components/ItemPage'; // 引入ItemPage组件
 import Footer from './components/Footer';
 import Counter from './components/Counter';
 
-const App = () => {
+function App() {
   return (
     <Router>
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/register" element={<RegisterPage />} /> {/* 添加RegisterPage路由 */}
-        <Route path="/login" element={<LoginPage />} /> {/* 添加LoginPage路由 */}
+        <Route path="/register" element={<RegisterPage />} />{' '}
+        {/* 添加RegisterPage路由 */}
+        <Route path="/login" element={<LoginPage />} />{' '}
+        {/* 添加LoginPage路由 */}
         <Route path="/items" element={<ItemPage />} /> {/* 添加ItemPage路由 */}
       </Routes>
       <Counter />
       <Footer />
     </Router>
   );
-};
+}
 
 export default App;

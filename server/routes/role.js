@@ -1,5 +1,5 @@
 import express from 'express';
-import Role from '../models/Role.js';
+import Role from '../models/Role';
 
 const router = express.Router();
 
@@ -7,7 +7,7 @@ const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.status(401).send('Unauthorized');
+  return res.status(401).send('Unauthorized'); // 确保有返回值
 };
 
 const checkRoles = (roles) => {
@@ -15,7 +15,7 @@ const checkRoles = (roles) => {
     if (roles.includes(req.user.role)) {
       return next();
     }
-    res.status(403).send('Forbidden');
+    return res.status(403).send('Forbidden'); // 确保有返回值
   };
 };
 
@@ -25,9 +25,10 @@ router.post('/', isAuthenticated, checkRoles(['admin']), async (req, res) => {
   try {
     const newRole = new Role({ name, permissions });
     const role = await newRole.save();
-    res.json(role);
+    return res.json(role); // 确保有返回值
   } catch (err) {
-    res.status(500).send('Server error');
+    console.error(err); // 添加错误日志
+    return res.status(500).send('Server error'); // 确保有返回值
   }
 });
 
@@ -35,9 +36,10 @@ router.post('/', isAuthenticated, checkRoles(['admin']), async (req, res) => {
 router.get('/', isAuthenticated, checkRoles(['admin']), async (req, res) => {
   try {
     const roles = await Role.find();
-    res.json(roles);
+    return res.json(roles); // 确保有返回值
   } catch (err) {
-    res.status(500).send('Server error');
+    console.error(err); // 添加错误日志
+    return res.status(500).send('Server error'); // 确保有返回值
   }
 });
 

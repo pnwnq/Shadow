@@ -1,12 +1,12 @@
 import express from 'express';
-import connectDB from './config/db.js';
 import cors from 'cors';
 import session from 'express-session';
-import passport from './config/passport.js';
-import authRoutes from './routes/auth.js';
-import itemRoutes from './routes/item.js';
-import roleRoutes from './routes/role.js';
 import dotenv from 'dotenv';
+import connectDB from './config/db';
+import passport from './config/passport';
+import authRoutes from './routes/auth';
+import itemRoutes from './routes/item';
+import roleRoutes from './routes/role';
 
 // 加载环境变量
 dotenv.config();
@@ -24,7 +24,7 @@ const corsOptions = {
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // 允许的方法
   credentials: true, // 允许发送cookie
   allowedHeaders: 'Content-Type,Authorization', // 允许的请求头
-  optionsSuccessStatus: 204 // 一些旧的浏览器对204的处理
+  optionsSuccessStatus: 204, // 一些旧的浏览器对204的处理
 };
 
 // 启用CORS
@@ -34,7 +34,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // 使用 session 中间件
-app.use(session({ secret: 'your_secret', resave: false, saveUninitialized: true }));
+app.use(
+  session({ secret: 'your_secret', resave: false, saveUninitialized: true }),
+);
 
 // 初始化 Passport 中间件
 app.use(passport.initialize());
@@ -54,7 +56,11 @@ app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
     return res.status(400).send({ msg: 'Invalid JSON', error: err.message });
   }
-  next();
+  // 确保调用 next() 传递错误到下一个中间件
+  next(err);
+  return null; // 确保中间件有返回值
 });
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
+});

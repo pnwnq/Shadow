@@ -3,16 +3,16 @@ import mongoose from 'mongoose';
 const RoleSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   permissions: {
     type: [String],
-    required: true
+    required: true,
   },
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 const Role = mongoose.model('Role', RoleSchema);

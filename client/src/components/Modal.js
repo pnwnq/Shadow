@@ -1,17 +1,5 @@
 import React from 'react';
-
-const Modal = ({ message, onClose }) => {
-  console.log('Modal message:', message); // 调试信息
-
-  return (
-    <div style={styles.modal}>
-      <div style={styles.modalContent}>
-        <span style={styles.close} onClick={onClose}>&times;</span>
-        <p>{message}</p> {/* 确保这里正确显示message */}
-      </div>
-    </div>
-  );
-};
+import PropTypes from 'prop-types';
 
 const styles = {
   modal: {
@@ -39,7 +27,39 @@ const styles = {
     float: 'right',
     fontSize: '28px',
     fontWeight: 'bold',
-  }
+  },
+};
+
+function Modal({ message, onClose }) {
+  console.log('Modal message:', message);
+
+  return (
+    <div
+      style={styles.modal}
+      role="button"
+      tabIndex={0}
+      onKeyPress={onClose}
+      onClick={onClose}
+    >
+      <div style={styles.modalContent}>
+        <span
+          style={styles.close}
+          role="button"
+          tabIndex={0}
+          onKeyPress={onClose}
+          onClick={onClose}
+        >
+          &times;
+        </span>
+        <p>{message}</p>
+      </div>
+    </div>
+  );
+}
+
+Modal.propTypes = {
+  message: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;

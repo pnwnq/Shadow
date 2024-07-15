@@ -1,15 +1,35 @@
 {
-    "extends": [
-      "eslint:recommended",
-      "airbnb-base",
-      "plugin:prettier/recommended"
-    ],
-    "env": {
-      "node": true,
-      "es6": true
-    },
-    "rules": {
-      "prettier/prettier": ["error"]
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "prettier",
+    "import",
+    "react-hooks"
+  ],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "no-console": "off",
+    "prettier/prettier": ["error"],
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "import/extensions": ["error", "ignorePackages", {
+      "js": "never",
+      "jsx": "never"
+    }]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
     }
   }
-  
+}

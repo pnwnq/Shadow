@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from './Modal';
 
-const LoginPage = () => {
+function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -12,7 +12,10 @@ const LoginPage = () => {
     e.preventDefault();
     console.log('Form submitted'); // 调试信息
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const res = await axios.post('http://localhost:5000/api/auth/login', {
+        email,
+        password,
+      });
       console.log('Response:', res.data); // 调试信息
       setMessage(res.data.msg); // 设置成功消息
     } catch (err) {
@@ -33,17 +36,28 @@ const LoginPage = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
         </div>
         <div>
           <label>Password</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </div>
         <button type="submit">Login</button>
       </form>
-      {showModal && <Modal message={message} onClose={closeModal} />} {/* 传递message给Modal */}
+      {showModal && <Modal message={message} onClose={closeModal} />}{' '}
+      {/* 传递message给Modal */}
     </div>
   );
-};
+}
 
 export default LoginPage;

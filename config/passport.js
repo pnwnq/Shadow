@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local'; // 导入 LocalStrategy
-import User from '../models/User'; // 确保路径正确
+import User from '../models/User.js'; // 确保路径正确
 
 passport.use(
   new LocalStrategy(

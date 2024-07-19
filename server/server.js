@@ -2,11 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import dotenv from 'dotenv';
-import connectDB from './config/db';
-import passport from './config/passport';
-import authRoutes from './routes/auth';
-import itemRoutes from './routes/item';
-import roleRoutes from './routes/role';
+import multer from 'multer';
+import connectDB from '../config/db.js';
+import passport from '../config/passport.js';
+import authRoutes from './routes/auth.js';
+import itemRoutes from './routes/item.js';
+import roleRoutes from './routes/role.js';
 
 // 加载环境变量
 dotenv.config();
@@ -41,6 +42,27 @@ app.use(
 // 初始化 Passport 中间件
 app.use(passport.initialize());
 app.use(passport.session());
+
+// 配置 Multer 文件上传
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // 设置文件上传路径
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`); // 设置文件名
+  },
+});
+
+const upload = multer({ storage });
+
+// 文件上传路由
+app.post('/upload', upload.single('file'), (req, res) => {
+  try {
+    res.status(200).json({ message: '文件上传成功', file: req.file });
+  } catch (err) {
+    res.status(500).json({ message: '文件上传失败', error: err.message });
+  }
+});
 
 // 路由
 app.use('/api/auth', authRoutes);

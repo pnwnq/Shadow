@@ -1,5 +1,5 @@
 import express from 'express';
-import Role from '../models/Role';
+import Role from '../models/Role.js';
 
 const router = express.Router();
 

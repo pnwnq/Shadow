@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function NavBar() {
+const NavBar = () => {
   return (
     <nav>
       <ul>
@@ -17,9 +17,12 @@ function NavBar() {
         <li>
           <Link to="/login">Login</Link>
         </li>
+        <li>
+          <Link to="/dropzone">Dropzone</Link> {/* 新增的导航链接 */}
+        </li>
       </ul>
     </nav>
   );
-}
+};
 
 export default NavBar;

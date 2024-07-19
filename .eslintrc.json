@@ -1,0 +1,52 @@
+{
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "airbnb",
+      "plugin:prettier/recommended",
+      "plugin:jest/recommended"
+    ],
+    "plugins": [
+      "react",
+      "prettier",
+      "import",
+      "react-hooks"
+    ],
+    "env": {
+      "browser": true,
+      "es6": true,
+      "node": true,
+      "jest": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "no-console": "off",
+      "prettier/prettier": ["error"],
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error",
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "import/extensions": ["error", "ignorePackages", {
+        "js": "never",
+        "jsx": "never"
+      }],
+      "jsx-a11y/label-has-associated-control": "off",
+      "no-underscore-dangle": "off",
+      "radix": "off"
+    },
+    "settings": {
+      "react": {
+        "createClass": "createReactClass",
+        "pragma": "React",
+        "fragment": "Fragment",
+        "version": "detect",
+        "flowVersion": "0.53"
+      }
+    }
+  }
+  

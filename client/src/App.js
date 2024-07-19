@@ -8,6 +8,7 @@ import LoginPage from './components/LoginPage'; // 引入LoginPage组件
 import ItemPage from './components/ItemPage'; // 引入ItemPage组件
 import Footer from './components/Footer';
 import Counter from './components/Counter';
+import MyDropzone from './components/MyDropzone'; // 引入MyDropzone组件
 
 function App() {
   return (
@@ -16,11 +17,11 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/register" element={<RegisterPage />} />{' '}
-        {/* 添加RegisterPage路由 */}
-        <Route path="/login" element={<LoginPage />} />{' '}
-        {/* 添加LoginPage路由 */}
-        <Route path="/items" element={<ItemPage />} /> {/* 添加ItemPage路由 */}
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/items" element={<ItemPage />} />
+        <Route path="/upload" element={<MyDropzone />} /> {/* 添加MyDropzone路由 */}
+        <Route path="/dropzone" element={<MyDropzone />} /> {/* 新增的路由 */}
       </Routes>
       <Counter />
       <Footer />
